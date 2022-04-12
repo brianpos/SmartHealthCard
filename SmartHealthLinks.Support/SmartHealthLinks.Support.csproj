@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net50;net462;netstandard2.1;netstandard2.0</TargetFrameworks>
+    <AssemblyName>SmartHealthLinks.Support</AssemblyName>
+    <PackageId>brianpos.SmartHealthLinks.Support</PackageId>
+    <Version>3.7.0-beta1</Version>
+    <Title>Smart Health Links Interfaces</Title>
+    <Summary>Class interfaces for the FHIR WebApi Models</Summary>
+    <Description>This library contains the interface definitions that an implementation should use to create the storage layer for a FHIR server using the FHIR WebApi Facade</Description>
+    <PackageTags>HL7;FHIR;SMART;FHIR;NetCore</PackageTags>
+    <Product>SmartHealthLinks.Support</Product>
+    <RootNamespace>SmartHealthLinks.Support</RootNamespace>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hl7.Fhir.R4" Version="3.7.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
+  </ItemGroup>
+
+</Project>
