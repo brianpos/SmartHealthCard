@@ -22,7 +22,7 @@ namespace SmartHealthLinks.Test
         public async Task SmartLinksTester()
         {
             // decode Link (reading it from the URL)
-            string smartLinkUrl = "https://demo.vaxx.link/viewer#shlink:/eyJvYXV0aCI6eyJ1cmwiOiJodHRwczovL2FwaS52YXh4LmxpbmsiLCJ0b2tlbiI6Ik1vem1NeVlXaU80ZmJnb21yR0lWdWVlelAzOGZwbGIzS29HMU9hWHMxeTAifSwiZmxhZ3MiOiJQIiwiZGVjcnlwdCI6IlcyOWlhbVZqZENCUFltcGxZM1JkIn0";
+            string smartLinkUrl = "https://demo.vaxx.link/viewer#shlink:/eyJvYXV0aCI6eyJ1cmwiOiJodHRwczovL2FwaS52YXh4LmxpbmsiLCJ0b2tlbiI6ImFtNUFteEpRS1NmZkIyeS1QQUlwQTJHSlRqYW5HNExjUC1YdXB2YXRRbkEifSwiZmxhZ3MiOiJQIiwiZGVjcnlwdCI6ImNlU1dMZXFXbWdPT1RoejBYUFo4UXRTY3dQLTdKYUpva0gta253UW11djAifQ";
             const string smartLinkName = "#shlink:/";
             var indexLink = smartLinkUrl.IndexOf(smartLinkName);
             if (indexLink < 0)
@@ -132,6 +132,14 @@ namespace SmartHealthLinks.Test
                         content = await client.GetAsync(locationUrl);
                         contentJson = await content.Content.ReadAsStringAsync();
                         System.Diagnostics.Trace.WriteLine(contentJson);
+
+                        if (!string.IsNullOrEmpty(linkDetails.decrypt))
+                        {
+                            // Need to decruypt the content first.
+                            var decryptKey = Base64UrlEncoder.DecodeBytes(linkDetails.decrypt);
+                            contentJson = Jose.JWT.Decode(contentJson, decryptKey, Jose.JweAlgorithm.DIR, Jose.JweEncryption.A256GCM);
+                        }
+
                         var vc = JsonConvert.DeserializeObject<VerifiableCredentials>(contentJson);
                         foreach (var credential in vc?.verifiableCredential)
                         {
